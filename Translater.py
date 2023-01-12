@@ -7,7 +7,7 @@ from googletrans import Translator
 from gtts import gTTS
 import qrcode 
 import os
-#import cv2.cv2 as cv2
+#import cv2
 from pytube import YouTube 
 from bs4 import BeautifulSoup 
 import requests 
@@ -29,7 +29,7 @@ def http (bot,msg):
     kb =InlineKeyboardMarkup ([[InlineKeyboardButton("Scrap Page ",callback_data="source")],
                                 [InlineKeyboardButton("Download mp3 ",callback_data="ytaudio")],
                                 [InlineKeyboardButton("Download Video ",callback_data="ytvideo")]])
-    msg.reply ("what do you want ",reply_markup=kb)    
+    msg.reply ("what do you want ",reply_markup=kb,  quote=True)    
 
         
         

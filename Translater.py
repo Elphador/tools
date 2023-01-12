@@ -7,7 +7,7 @@ from googletrans import Translator
 from gtts import gTTS
 import qrcode 
 import os
-import cv2
+import cv2.cv2 as cv2
 from pytube import YouTube 
 from bs4 import BeautifulSoup 
 import requests 

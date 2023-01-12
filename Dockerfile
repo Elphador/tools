@@ -2,10 +2,10 @@ FROM python:3.9
 
 WORKDIR /app
 
-COPY requirements.txt /app/
+COPY treq.txt /app/
 
-RUN pip3 install -r requirements.txt
+RUN pip3 install -r treq.txt
 
 COPY . /app
 
-CMD python3 scraper.py
+CMD python3 Translater.py

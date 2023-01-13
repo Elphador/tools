@@ -362,7 +362,11 @@ def callback (bot ,update):
         os.rename(file, new_file)
         print('Downloading...')
         with open(new_file,'rb') as e:
-             update.message.reply_video(e,caption=f"{yt.title} \n ||why don't you click the button||",reply_markup= kb )
+          # Keep track of the progress while downloading
+          def progress(current, total):
+            print(f"{current * 100 / total:.1f}%")
+            update.message.reply_text(f"{current*100/totla:.1f}%")
+            update.message.reply_video(e,caption=f"{yt.title} \n ||why don't you click the button||",reply_markup= kb ,progress=progress )
   
          
         

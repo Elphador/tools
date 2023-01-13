@@ -338,7 +338,7 @@ def callback (bot ,update):
         os.rename(file, new_file)
         print('Downloading...')
         with open(new_file,'rb') as e:
-            update.message.reply_audio(e,caption=f"{yt.title} \n|why don't you click the button| ",reply_markup=([[InlineKeyboardButton("Just Click",url="t.me/developerschat")]]))
+            update.message.reply_audio(e,caption=f"{yt.title} \n|why don't you click the button| ")
   
         
                  

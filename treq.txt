@@ -10,7 +10,7 @@ TgCrypto
 pyqrcode
 pypng
 pyzbar
-zbar
+
 Pillow 
 motor
 aiofiles

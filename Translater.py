@@ -326,7 +326,7 @@ def callback (bot ,update):
         
     elif callback_data == "ytaudio" :
         yt = YouTube(user_text)
-        kb = InlineKeyboardMarkup([[InlineKeyboardButton ("Just Click Something",url="https://t.me/developerspage ")]]) 
+        kb = InlineKeyboardMarkup([[InlineKeyboardButton ("Just Click Something",url="https://t.me/developerspage")]]) 
         print ("something")
         video = yt.streams.filter(file_extension="mp4").first()
         folder = "downloads/video/"
@@ -346,7 +346,7 @@ def callback (bot ,update):
     elif callback_data == "ytvideo":
       
         yt = YouTube(user_text)
-        kb = InlineKeyboardMarkup([[InlineKeyboardButton ("Do it",url="https://t.me/developerspage ")]])
+        kb = InlineKeyboardMarkup([[InlineKeyboardButton ("Do it",url="https://t.me/developerspage")]])
         print ("something") 
         video = yt.streams.filter(file_extension="mp4").first()
         folder = "downloads/video/"

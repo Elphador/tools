@@ -7,12 +7,12 @@ from googletrans import Translator
 from gtts import gTTS
 import qrcode 
 import os
-import zbar
+#import zbar
 
 
 
 from PIL import Image
-from pyzbar.pyzbar import decode
+#from pyzbar.pyzbar import decode
 import pyqrcode
 from tool import headers 
 #import cv2

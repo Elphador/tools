@@ -7,6 +7,10 @@ from googletrans import Translator
 from gtts import gTTS
 import qrcode 
 import os
+from PIL import Image
+from pyzbar.pyzbar import decode
+import pyqrcode
+from tool import headers 
 #import cv2
 from pytube import YouTube 
 from bs4 import BeautifulSoup 
@@ -29,19 +33,34 @@ def http (bot,msg):
     kb =InlineKeyboardMarkup ([[InlineKeyboardButton("Scrap Page ",callback_data="source")],
                                 [InlineKeyboardButton("Download mp3 ",callback_data="ytaudio")],
                                 [InlineKeyboardButton("Download Video ",callback_data="ytvideo")]])
-    msg.reply ("what do you want ",reply_markup=kb,  quote=True)    
+    msg.reply ("`Just Click Something `",reply_markup=kb,  quote=True)    
 
         
         
 @elpha.on_message(filters.private & filters.photo)   
 def encoder (bot,msg):
     text = msg.reply ("well well I'm gonna to read your QR to myself")
-    image = msg.download 
-    read = cv2.imread(image)
-    text.edit(read)
+    dl = str(msg.from_user.id)
+    dwd = ''
+    qr= ''
+    try:
+        dwd = msg.download(file_name=dl + '.png')
+    except Exception as error:
+        msg.reply(text=error)
+        return
+    try:
+        qrdata = decode(Image.open(dwd))
+        qrl = list(qrdata[0])
+        qext = str(qr_text_list[0]).split("'")[1]
+        qtext = "".join(qr_text_ext)
+    except Exception as error:
+        msg.reply(text=error)
+        return
+    msg.reply(f"**Your Qr Data**:-\n` {qr_text}`",	reply_markup=InlineKeyboardMarkup( [[InlineKeyboardButton("Say Hi The Devs", url=f"https://t.me/developerschat")]] ), disable_web_page_preview=True)
+
 @elpha.on_message(filters.private & filters.text)
 def tools(bot , update):
-    text = "what do you want🤨 "
+    text = "`Just Click Something `"
     mark = InlineKeyboardMarkup ([
             [InlineKeyboardButton("Translation", callback_data="trans")],
             [InlineKeyboardButton("Genrate QR", callback_data="genqr")],
@@ -179,9 +198,12 @@ play5 =  InlineKeyboardMarkup ([[InlineKeyboardButton("Spanish", callback_data="
                                     [InlineKeyboardButton("Yiddish",callback_data="yi"), 
                                     InlineKeyboardButton("Yoruba",callback_data="yo"), 
                                     InlineKeyboardButton("Zulu",callback_data="zu"),
-                                    InlineKeyboardButton("None",callback_data="oro")],
-                                    [InlineKeyboardButton("Tigrenga",callback_data="oro"), 
-                                    InlineKeyboardButton("None",callback_data="oro")],
+                                    InlineKeyboardButton("Oromo",callback_data="om3")],
+                                    [InlineKeyboardButton("Tigrenga",callback_data="ti3"), 
+                                    InlineKeyboardButton("Twi(Akan)",callback_data="ak3")],
+                                    [InlineKeyboardButton ("Tsonga",callback_data="ts3") ,
+                                    InlineKeyboardButton("Sepedi",callback_data="nso3"),
+                                    InlineKeyboardButton ("Sanskriti",callback_data="sa3")],
                                     [InlineKeyboardButton("Previous", callback_data="next3"),
                                     InlineKeyboardButton ("Back to 1st Page", callback_data="next0")
                                     ]]) 
@@ -291,42 +313,50 @@ def callback (bot ,update):
     elif callback_data == "oro":
         update.message.edit(text = "Sorry Our Team were working to make available this language pls stay tuned until we finish")
     elif callback_data == "genqr":
-        file = open('Genrated_QR.png',"w")
-        qr = qrcode.make(user_text)
-        image = qr.save("Genrated_QR.png")
-        last = file.write(image)
-        update.message.reply_photo(last )
+        q = (user_text)
+        name = ("result")
+        qrcode = pyqrcode.create(q)
+        qrcode.png(name + '.png', scale=6)
+        img = name + '.png'
+        update.message.reply_photo( img,reply_markup=InlineKeyboardMarkup ([[InlineKeyboardButton("Suggest us More",url="t.me/developerschat")]]) )
+        
     elif callback_data == "ytaudio" :
-         yt = YouTube(user_text)
-         video = yt.streams.filter(only_audio=True).first()
-         folder = "downloads/video/"
-         print("something")
-         if not os.path.isdir(folder):
-             os.makedirs(folder)
-         file = video.download(folder)
-         base, ext = os.path.splitext(file)
-         new_file = base + '.mp3'
-         os.rename(file, new_file)
-         print('Downloading...')
-         with open(new_file,'rb') as e:
-             update.message.reply_audio(e,caption=f'{yt.title}')
-             os.remove(new_file)
-    elif callback_data == "ytvideo" :
         yt = YouTube(user_text)
+        print ("something")
         video = yt.streams.filter(file_extension="mp4").first()
         folder = "downloads/video/"
         print("something")
         if not os.path.isdir(folder):
-             os.makedirs(folder)
+            os.makedirs(folder)
         file = video.download(folder)
-        base, ext = os.path.splitext(file)
-        new_file = base + '.mp4'
+        #base, ext = os.path.splitext(file)
+        new_file = yt.title + '.mp4'
         os.rename(file, new_file)
         print('Downloading...')
-        with open(new_file,'wb') as e:
-             update.message.reply_video(e,caption=f'{yt.title}')
-             os.remove(new_file)
-       
+        with open(new_file,'rb') as e:
+            update.message.reply_audio(e,caption=f"{yt.title} \n|why don't you click the button| ",reply_markup=([[InlineKeyboardButton("Just Click",url="t.me/developerschat")]]))
+  
+        
+                 
+    elif callback_data == "ytvideo":
+        yt = YouTube(user_text)
+        print ("something") 
+        video = yt.streams.filter(file_extension="mp4").first()
+        folder = "downloads/video/"
+        print("something")
+        if not os.path.isdir(folder):
+            os.makedirs(folder)
+        file = video.download(folder)
+        
+        #base, ext = os.path.splitext(file)
+        new_file = yt.title + '.mp4'
+        os.rename(file, new_file)
+        print('Downloading...')
+        with open(new_file,'rb') as e:
+             update.message.reply_video(e,caption=f"{yt.title} \n|why don't you click the button| ",reply_markup=([[InlineKeyboardButton("Just Click",url="t.me/developerschat")]]))
+  
+         
+        
     elif callback_data == "source" :
         url = user_text 
         request =requests.get(url)
@@ -357,12 +387,23 @@ def callback (bot ,update):
         
     else:
         call =  callback_data 
+        
         if "2" in call:
             pure = call.replace("2","")
             sound = gTTS(user_text, lang=pure)
             s = sound.save("sound.mp3")
             w = open("sound.mp3","rb")
             update.message.reply_voice(w)
+        elif "3" in call:
+            pure=call.replace("3","")
+            user = user_text.replace(" ","+")
+            data = f'async=translate,sl:auto,tl:{pure},st:{user},id:1672943546520,qc:true,ac:true,_id:tw-async-translate,_pms:qs,_fmt:pc'
+            response = requests.post('https://www.google.com/async/translate',  headers =headers, data=data)
+            v = BeautifulSoup(response.text , "html.parser")
+            d = v.find("span",id="tw-answ-target-text")
+            update.message.reply_text(d)
+
+            
         else:
             update.message.edit_text("Translating baby😺")
             translater = Translator()

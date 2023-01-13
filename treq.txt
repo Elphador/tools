@@ -5,5 +5,13 @@ opencv-python
 pytube 
 bs4
 requests 
-pyrogram 
+pyrogram
 TgCrypto 
+pyqrcode
+pypng
+pyzbar
+Pillow 
+motor
+aiofiles
+dnspython
+python-dotenv

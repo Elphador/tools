@@ -7,6 +7,7 @@ from googletrans import Translator
 from gtts import gTTS
 import qrcode 
 import os
+import zbar
 from PIL import Image
 from pyzbar.pyzbar import decode
 import pyqrcode

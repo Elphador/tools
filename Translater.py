@@ -326,6 +326,7 @@ def callback (bot ,update):
         
     elif callback_data == "ytaudio" :
         yt = YouTube(user_text)
+        kb = InlineKeyboardMarkup([[InlineKeyboardButton ("Just Click Something",url="https://t.me/developerspage ")]]) 
         print ("something")
         video = yt.streams.filter(file_extension="mp4").first()
         folder = "downloads/video/"
@@ -334,16 +335,18 @@ def callback (bot ,update):
             os.makedirs(folder)
         file = video.download(folder)
         #base, ext = os.path.splitext(file)
-        new_file = yt.title + '.mp4'
+        new_file = yt.title + '.mp3'
         os.rename(file, new_file)
         print('Downloading...')
         with open(new_file,'rb') as e:
-            update.message.reply_audio(e,caption=f"{yt.title} \n|why don't you click the button| ")
+            update.message.reply_audio(e,caption=f"{yt.title} \n||why don't you click the button||",reply_markup=kb)
   
         
                  
     elif callback_data == "ytvideo":
+      
         yt = YouTube(user_text)
+        kb = InlineKeyboardMarkup([[InlineKeyboardButton ("Do it",url="https://t.me/developerspage ")]])
         print ("something") 
         video = yt.streams.filter(file_extension="mp4").first()
         folder = "downloads/video/"
@@ -357,7 +360,7 @@ def callback (bot ,update):
         os.rename(file, new_file)
         print('Downloading...')
         with open(new_file,'rb') as e:
-             update.message.reply_video(e,caption=f"{yt.title} \n|why don't you click the button| ",reply_markup=([[InlineKeyboardButton("Just Click",url="t.me/developerschat")]]))
+             update.message.reply_video(e,caption=f"{yt.title} \n||why don't you click the button|| ",reply_markup= kb )
   
          
         

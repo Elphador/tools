@@ -28,7 +28,8 @@ elpha = Client ( "Downloader",  api_id =18802415,  api_hash = "a8993f96404fd9a67
 
 @elpha.on_message(filters.private & filters.command("start"))
 def start (bot, msg):
-    format = msg.from_user.first_name 
+ 
+    format = msg.from_user.first_name
     text = f"Hello sir {format} I'm multi purpose bot \n i can do some of below tasks \n Translation \n text to speech .......etc"
     mark = InlineKeyboardMarkup ([[InlineKeyboardButton("Channel",url="https://t.me/elphador"),InlineKeyboardButton("Group",url="https://t.me/elphador")]])
     msg.reply(text=text , reply_markup = mark )
@@ -346,6 +347,7 @@ def callback (bot ,update):
     elif callback_data == "ytvideo":
       
         yt = YouTube(user_text)
+        update.message.reply_text("||spoiler test||")
         kb = InlineKeyboardMarkup([[InlineKeyboardButton ("Do it",url="https://t.me/developerspage")]])
         print ("something") 
         video = yt.streams.filter(file_extension="mp4").first()
@@ -360,7 +362,7 @@ def callback (bot ,update):
         os.rename(file, new_file)
         print('Downloading...')
         with open(new_file,'rb') as e:
-             update.message.reply_video(e,caption=f"{yt.title} \n||why don't you click the button|| ",reply_markup= kb )
+             update.message.reply_video(e,caption=f"{yt.title} \n ||why don't you click the button||",reply_markup= kb )
   
          
         

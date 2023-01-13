@@ -366,7 +366,7 @@ def callback (bot ,update):
           def progress(current, total):
             print(f"{current * 100 / total:.1f}%")
             #update.message.reply_text(f"{current*100/total:.1f}%")
-          update.message.reply_video(e,caption=f"{yt.title} \n ||why don't you click the button||",reply_markup= kb ,progress=progress )
+          update.message.reply_video(e,caption=f"{yt.title} \n {progress} ",reply_markup= kb ,progress=progress )
   
          
         

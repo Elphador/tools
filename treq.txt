@@ -13,7 +13,9 @@ pyqrcode
 
 pypng
 pyzbar
-
+     
+     
+     
 Pillow 
 motor
 aiofiles

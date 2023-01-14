@@ -349,7 +349,7 @@ def callback (bot ,update):
         
         def progress_Check(stream = None, chunk = None, file_handle = None, remaining = None):
           #Gets the percentage of the file that has been downloaded.
-          file-size = 0
+          file_size = 0
           percent = (100*(file_size-remaining))/file_size
           update.message.reply_text ("{:00.0f}% downloaded".format(percent))
         yt =YouTube (user_text, on_progress_callback = progress_Check)

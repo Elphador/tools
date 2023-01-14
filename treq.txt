@@ -8,6 +8,9 @@ requests
 pyrogram
 TgCrypto 
 pyqrcode
+
+
+
 pypng
 pyzbar
 

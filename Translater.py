@@ -349,13 +349,17 @@ def callback (bot ,update):
         
         def progress_Check(stream = None, chunk = None, file_handle = None, remaining = None):
           #Gets the percentage of the file that has been downloaded.
+          file-size = 0
           percent = (100*(file_size-remaining))/file_size
           update.message.reply_text ("{:00.0f}% downloaded".format(percent))
         yt =YouTube (user_text, on_progress_callback = progress_Check)
         update.message.reply_text("||spoiler test||")
         kb = InlineKeyboardMarkup([[InlineKeyboardButton ("Do it",url="https://t.me/developerspage")]])
         print ("something") 
+        
         video = yt.streams.filter(file_extension="mp4").first()
+        global file_size
+        file_size = video.filesize
         folder = "downloads/video/"
         print("something")
         if not os.path.isdir(folder):

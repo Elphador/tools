@@ -9,8 +9,6 @@ pyrogram
 TgCrypto 
 pyqrcode
 
-zbar
-
 pypng
 pyzbar
      

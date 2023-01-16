@@ -28,7 +28,7 @@ elpha = Client ( "Tools",  api_id =18802415,  api_hash = "a8993f96404fd9a67de867
 def start (bot, msg):
     format = msg.from_user.first_name 
     text = f"**Hello sir {format} I'm multi purpose bot \n i can do some cool  tasks  .......etc** \n ||what if you joined my little channel🤕||"
-    mark = InlineKeyboardMarkup ([[InlineKeyboardButton("Channel",url="https://t.me/developerspage"),InlineKeyboardButton("Group",url="https://t.me/developerschat")], [InlineKeyboardButton("Developer", url=https://t.me/the_ep)]])
+    mark = InlineKeyboardMarkup ([[InlineKeyboardButton("Channel",url="https://t.me/developerspage"),InlineKeyboardButton("Group",url="https://t.me/developerschat")], [InlineKeyboardButton("Developer", url="https://t.me/the_ep")]])
     msg.reply(text=text , reply_markup = mark )
 @elpha.on_message(filters.private & filters.regex("http"))
 def http (bot,msg):
@@ -177,9 +177,7 @@ play4 =  InlineKeyboardMarkup ([[InlineKeyboardButton("Mongolian",callback_data=
                                     [InlineKeyboardButton("Slovenian", callback_data="sl"), 
                                     InlineKeyboardButton("Somali",callback_data="so")],
                                     [InlineKeyboardButton("Previous", callback_data="next2"),
-                                    InlineKeyboardButton ("Next", callback_data="next4")
-                                    ]
-                                ])   
+                                    InlineKeyboardButton("Next", callback_data="next4") ]])   
         
 play5 =  InlineKeyboardMarkup ([[InlineKeyboardButton("Spanish", callback_data="es"),
                                     InlineKeyboardButton("Sudanese", callback_data="su"), 
@@ -202,15 +200,14 @@ play5 =  InlineKeyboardMarkup ([[InlineKeyboardButton("Spanish", callback_data="
                                     InlineKeyboardButton("Zulu",callback_data="zu"),
                                     InlineKeyboardButton("Oromo",callback_data="om3")],
                                     [InlineKeyboardButton("Tigrenga",callback_data="ti3"), 
-                                    InlineKeyboardButton("Twi(Akan)",callback_data="ak3"),
-                                    InlineKeyboardButton("Quachua",callback_data="qu3")
-                                    InlineKeyboardButton ("Guarani",callback_data="gn3"),
+                                    InlineKeyboardButton("Twi or Akan",callback_data="ak3"),
+                                    InlineKeyboardButton("Quachua",callback_data="qu3"),
+                                    InlineKeyboardButton ("Guarani",callback_data="gn3")],
                                     [InlineKeyboardButton ("Tsonga",callback_data="ts3") ,
                                     InlineKeyboardButton("Sepedi",callback_data="nso3"),
                                     InlineKeyboardButton ("Sanskriti",callback_data="sa3")],
                                     [InlineKeyboardButton("Previous", callback_data="next3"),
-                                    InlineKeyboardButton ("Back to 1st Page", callback_data="next0")
-                                    ]]) 
+                                    InlineKeyboardButton("Back to 1st Page", callback_data="next0")]])
 sound1 =  InlineKeyboardMarkup ([
                                     [InlineKeyboardButton("Africans", callback_data="2af"),
                                     InlineKeyboardButton("Arabic", callback_data="ar2"), 
@@ -340,7 +337,7 @@ def callback (bot ,update):
         qrcode = pyqrcode.create(q)
         qrcode.png(name + '.png', scale=6)
         img = name + '.png'
-        update.message.reply_photo( img,caption=f"Qr Data : {q}"reply_markup=InlineKeyboardMarkup ([[InlineKeyboardButton("Suggest us More",url="t.me/developerschat")]]) )
+        update.message.reply_photo( img,caption=f"Qr Data : {q}" ,reply_markup=InlineKeyboardMarkup ([[InlineKeyboardButton("Suggest us More",url="t.me/developerschat")]]) )
         
     elif callback_data == "ytaudio" :
         text = update.message.reply_text("`Downloading  to my server😇`")
@@ -358,9 +355,9 @@ def callback (bot ,update):
         print('Downloading...')
         with open(new_file,'rb') as e:
             def progress(current, total):
-            print(f"{current * 100 / total:.1f}%")
-            text.edit(f"`Uploading to your server😇 {current*100/total:.1f}% `")
-            update.message.reply_audio(e,caption=f"{yt.title} \n||why don't you click the button||",reply_markup=([[InlineKeyboardButton("Just Click",url="t.me/developerschat")]]))
+                print(f"{current * 100 / total:.1f}%")
+                text.edit(f"`Uploading to your server😇 {current*100/total:.1f}% `")
+                update.message.reply_audio(e,caption=f"{yt.title} \n||why don't you click the button||",reply_markup=([[InlineKeyboardButton("Just Click",url="t.me/developerschat")]]))
   
         
                  
@@ -381,9 +378,9 @@ def callback (bot ,update):
         print('Downloading...')
         with open(new_file,'rb') as e:
             def progress(current, total):
-            print(f"{current * 100 / total:.1f}%")
-            text.edit(f"` Uploading to your server😇 {current*100/total:.1f}% `")
-             update.message.reply_video(e,caption=f"{yt.title} \n||why don't you click the button||",reply_markup=([[InlineKeyboardButton("Just Click",url="t.me/developerschat")]]))
+                print(f"{current * 100 / total:.1f}%")
+                text.edit(f"` Uploading to your server😇 {current*100/total:.1f}% `")
+                update.message.reply_video(e,caption=f"{yt.title} \n||why don't you click the button||",reply_markup=([[InlineKeyboardButton("Just Click",url="t.me/developerschat")]]))
   
          
         

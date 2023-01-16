@@ -7,10 +7,8 @@ from googletrans import Translator
 from gtts import gTTS
 import qrcode 
 import os
-#import zbar
-
-
-
+import zbar
+import pyzbar
 from PIL import Image
 #from pyzbar.pyzbar import decode
 import pyqrcode
@@ -19,19 +17,18 @@ from tool import headers
 from pytube import YouTube 
 from bs4 import BeautifulSoup 
 import requests 
+whisper = {}
 
 
 
-
-elpha = Client ( "Downloader",  api_id =18802415,  api_hash = "a8993f96404fd9a67de867586b3ddc92" , bot_token = "5772504388:AAEX0vjm-rx1sYdLU_qLpIS_RMqSvi5KANg")
+elpha = Client ( "Tools",  api_id =18802415,  api_hash = "a8993f96404fd9a67de867586b3ddc92" , bot_token = "5942042027:AAFguYxw9ojuX8nIgYAGA6zPLNT1-k-AGS8")
 
 
 @elpha.on_message(filters.private & filters.command("start"))
 def start (bot, msg):
- 
-    format = msg.from_user.first_name
-    text = f"Hello sir {format} I'm multi purpose bot \n i can do some of below tasks \n Translation \n text to speech .......etc"
-    mark = InlineKeyboardMarkup ([[InlineKeyboardButton("Channel",url="https://t.me/elphador"),InlineKeyboardButton("Group",url="https://t.me/elphador")]])
+    format = msg.from_user.first_name 
+    text = f"**Hello sir {format} I'm multi purpose bot \n i can do some cool  tasks  .......etc** \n ||what if you joined my little channel🤕||"
+    mark = InlineKeyboardMarkup ([[InlineKeyboardButton("Channel",url="https://t.me/developerspage"),InlineKeyboardButton("Group",url="https://t.me/developerschat")], [InlineKeyboardButton("Developer", url=https://t.me/the_ep)]])
     msg.reply(text=text , reply_markup = mark )
 @elpha.on_message(filters.private & filters.regex("http"))
 def http (bot,msg):
@@ -44,7 +41,7 @@ def http (bot,msg):
         
 @elpha.on_message(filters.private & filters.photo)   
 def encoder (bot,msg):
-    text = msg.reply ("well well I'm gonna to read your QR to myself")
+    text = msg.reply ("`if you sent Qr I'll try to read but not be sure on me it will works 10% and return success for lucky ones`/n||the developers are working to fix this wait until release ||")
     dl = str(msg.from_user.id)
     dwd = ''
     qr= ''
@@ -205,7 +202,9 @@ play5 =  InlineKeyboardMarkup ([[InlineKeyboardButton("Spanish", callback_data="
                                     InlineKeyboardButton("Zulu",callback_data="zu"),
                                     InlineKeyboardButton("Oromo",callback_data="om3")],
                                     [InlineKeyboardButton("Tigrenga",callback_data="ti3"), 
-                                    InlineKeyboardButton("Twi(Akan)",callback_data="ak3")],
+                                    InlineKeyboardButton("Twi(Akan)",callback_data="ak3"),
+                                    InlineKeyboardButton("Quachua",callback_data="qu3")
+                                    InlineKeyboardButton ("Guarani",callback_data="gn3"),
                                     [InlineKeyboardButton ("Tsonga",callback_data="ts3") ,
                                     InlineKeyboardButton("Sepedi",callback_data="nso3"),
                                     InlineKeyboardButton ("Sanskriti",callback_data="sa3")],
@@ -295,15 +294,33 @@ sound2 =  InlineKeyboardMarkup ([
                           
                                      
            
-    
-    
+  
+     
 @elpha.on_callback_query()
 def callback (bot ,update):
     callback_data = update.data
     text2 = "Choose Language baby🤱"
-    
-    user_text = update.message.reply_to_message.text 
-    if callback_data =="trans":
+    if callback_data == "whisper":
+        
+        uid = update.from_user.id
+        print (uid)
+        beta = whisper.get("data").get("ex")
+        
+        u  = int(whisper.get("data").get("id").replace(".",""))
+        if beta.startswith("."):
+            if u == uid :
+                update.answer("Oh sorry dude😅you're the only one who can't able to see this message🙈 ",show_alert=True)
+            else :
+                update.answer(str(whisper.get("data").get("text")) , show_alert=True)
+                
+        if uid == u :
+            update.answer(text= str(whisper.get("data").get("text")) ,show_alert=True)
+        else :
+            update.answer("this message isn't sent for you ,don't click such buttons blindly as you get😏,now assume i haven't seen you & you haven't read this mesage and get back😒",show_alert=True)
+        sleep(120)    
+        whisper.clear()   
+    elif callback_data =="trans":
+        update.answer(f"{user_text}", show_alert=True)
         update.message.edit_text (text = text2 ,reply_markup = play1 )
     elif callback_data== "next1":
         update.message.edit (text =  text2 ,reply_markup = play2)
@@ -323,43 +340,35 @@ def callback (bot ,update):
         qrcode = pyqrcode.create(q)
         qrcode.png(name + '.png', scale=6)
         img = name + '.png'
-        update.message.reply_photo( img,reply_markup=InlineKeyboardMarkup ([[InlineKeyboardButton("Suggest us More",url="t.me/developerschat")]]) )
+        update.message.reply_photo( img,caption=f"Qr Data : {q}"reply_markup=InlineKeyboardMarkup ([[InlineKeyboardButton("Suggest us More",url="t.me/developerschat")]]) )
         
     elif callback_data == "ytaudio" :
+        text = update.message.reply_text("`Downloading  to my server😇`")
         yt = YouTube(user_text)
-        kb = InlineKeyboardMarkup([[InlineKeyboardButton ("Just Click Something",url="https://t.me/developerspage")]]) 
         print ("something")
-        video = yt.streams.filter(file_extension="mp4").first()
+        video = yt.streams.filter(only_audio=True).first()
         folder = "downloads/video/"
         print("something")
         if not os.path.isdir(folder):
             os.makedirs(folder)
         file = video.download(folder)
         #base, ext = os.path.splitext(file)
-        new_file = yt.title + '.mp3'
+        new_file = yt.title + '.mp4'
         os.rename(file, new_file)
         print('Downloading...')
         with open(new_file,'rb') as e:
-            update.message.reply_audio(e,caption=f"{yt.title} \n||why don't you click the button||",reply_markup=kb)
+            def progress(current, total):
+            print(f"{current * 100 / total:.1f}%")
+            text.edit(f"`Uploading to your server😇 {current*100/total:.1f}% `")
+            update.message.reply_audio(e,caption=f"{yt.title} \n||why don't you click the button||",reply_markup=([[InlineKeyboardButton("Just Click",url="t.me/developerschat")]]))
   
         
                  
     elif callback_data == "ytvideo":
-      
-        
-        def progress_Check(stream = None, chunk = None, file_handle = None, remaining = None):
-          #Gets the percentage of the file that has been downloaded.
-          file_size = 0
-          percent = (100*(file_size-remaining))/file_size
-          update.message.reply_text ("{:00.0f}% downloaded".format(percent))
-        yt =YouTube (user_text, on_progress_callback = progress_Check)
-        update.message.reply_text("||spoiler test||")
-        kb = InlineKeyboardMarkup([[InlineKeyboardButton ("Do it",url="https://t.me/developerspage")]])
+        text = update.message.reply_text("`Downloading  to my server `")
+        yt = YouTube(user_text)
         print ("something") 
-        
         video = yt.streams.filter(file_extension="mp4").first()
-        global file_size
-        file_size = video.filesize
         folder = "downloads/video/"
         print("something")
         if not os.path.isdir(folder):
@@ -371,26 +380,27 @@ def callback (bot ,update):
         os.rename(file, new_file)
         print('Downloading...')
         with open(new_file,'rb') as e:
-          text=update.message.reply_text("proggreß")
-          # Keep track of the progress while downloading
-          def progress(current, total):
+            def progress(current, total):
             print(f"{current * 100 / total:.1f}%")
-            text.edit(f"{current*100/total:.1f}%")
-          update.message.reply_video(e,caption=f"{yt.title} \n {progress} ",reply_markup= kb ,progress=progress )
+            text.edit(f"` Uploading to your server😇 {current*100/total:.1f}% `")
+             update.message.reply_video(e,caption=f"{yt.title} \n||why don't you click the button||",reply_markup=([[InlineKeyboardButton("Just Click",url="t.me/developerschat")]]))
   
          
         
     elif callback_data == "source" :
         url = user_text 
-        request =requests.get(url)
-        soup = BeautifulSoup(request.content , 'html.parser')
-        parse = open( 'result.txt','w')
-        we = parse.write(soup.prettify())
-        parse.close
-        update.message.reply_document("result.txt")
-        
+        try:
+            request =requests.get(url)
+            soup = BeautifulSoup(request.content , 'html.parser')
+            parse = open( 'result.txt','w')
+            we = parse.write(soup.prettify())
+            parse.close
+            update.message.reply_document("result.txt")
+        except:
+            update.message.reply_text("sorry it seems there's no byte data on web")
+    
     elif callback_data== "back1":
-        update.message.edit_text("Ohh sorry can't you find what function you wanted still you can report this to our team ")
+        update.message.edit_text("Ohh sorry can't you find what function you wanted still you can report this to [our team](https://t.me/developerschat)")
     elif callback_data == "tts" :
         update.message.edit_text(text=text2 , reply_markup = sound1 )
     elif callback_data =="next01":
@@ -418,6 +428,7 @@ def callback (bot ,update):
             w = open("sound.mp3","rb")
             update.message.reply_voice(w)
         elif "3" in call:
+            update.message.reply_text("`Translating●●○○○○○○ baby🤱`")
             pure=call.replace("3","")
             user = user_text.replace(" ","+")
             data = f'async=translate,sl:auto,tl:{pure},st:{user},id:1672943546520,qc:true,ac:true,_id:tw-async-translate,_pms:qs,_fmt:pc'
@@ -428,22 +439,34 @@ def callback (bot ,update):
 
             
         else:
-            update.message.edit_text("Translating baby😺")
+            update.message.edit_text("`Translating●●●●○○○○○○ baby😺`")
             translater = Translator()
             data = callback_data
             Translation = translater.translate(user_text, dest= data)
-            update.message.edit_text(Translation.text)
-        
+            update.message.edit_text(f"`{Translation.text}` \n \n ** Suggest us languages available on google but not listed here ** " , reply_markup  = ([[InlineKeyboardButton("Suggest", url="https://t.me/developerschat")]]))
+v={}      
 @elpha.on_inline_query()   
 def inline (bot,msg):
-    text = msg.query
-    trans = Translator()
-    tex = trans.translate(text)
+    
+    txt = msg.query
+    m = msg.from_user.first_name 
+    id = txt.split("|")[0]
+    text = txt.split("|")[1]
+    whisper["data"]={"text":text , "id":id,"ex":txt}
+    
     msg.answer( results = [ ( InlineQueryResultArticle(
-    title = "Translation", 
-    description = tex.text ,
-    input_message_content = InputTextMessageContent("Elphador"),
-    url = "https://google.com" )) ] )
+    title = "whispering", 
+    description ="user id | message content format ",
+    input_message_content = InputTextMessageContent(f"whisper message from {m} to {id}") , reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Whisper", callback_data="whisper")]]))) ] )
+@elpha.on_callback_query()
+def callback (bot ,update):
+        callback_data = update.data
+        text2 = "Choose Language baby🤱"
+        if callback_data == "whisper":
+            update.answer(text=str(text) ,show_alert=True)
+        else :
+            pass
+     
 
         
 print ("alive ")        

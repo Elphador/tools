@@ -8,10 +8,10 @@ from gtts import gTTS
 import qrcode 
 import os
 #import zbar
-import pyzbar
-from PIL import Image
+#import pyzbar
+#from PIL import Image
 #from pyzbar.pyzbar import decode
-import pyqrcode
+#import pyqrcode
 from tool import headers 
 #import cv2
 from pytube import YouTube 
@@ -297,8 +297,8 @@ sound2 =  InlineKeyboardMarkup ([
 def callback (bot ,update):
     callback_data = update.data
     text2 = "Choose Language baby🤱"
+    
     if callback_data == "whisper":
-        
         uid = update.from_user.id
         print (uid)
         beta = whisper.get("data").get("ex")
@@ -314,10 +314,13 @@ def callback (bot ,update):
             update.answer(text= str(whisper.get("data").get("text")) ,show_alert=True)
         else :
             update.answer("this message isn't sent for you ,don't click such buttons blindly as you get😏,now assume i haven't seen you & you haven't read this mesage and get back😒",show_alert=True)
-        sleep(120)    
-        whisper.clear()   
+        time.sleep(480)    
+        whisper.clear() 
+    
     elif callback_data =="trans":
-        update.answer(f"{user_text}", show_alert=True)
+        user_text = update.message.reply_to_message.text 
+   
+        update.answer(f"choose language🤩", show_alert=True)
         update.message.edit_text (text = text2 ,reply_markup = play1 )
     elif callback_data== "next1":
         update.message.edit (text =  text2 ,reply_markup = play2)
@@ -332,6 +335,8 @@ def callback (bot ,update):
     elif callback_data == "oro":
         update.message.edit(text = "Sorry Our Team were working to make available this language pls stay tuned until we finish")
     elif callback_data == "genqr":
+        user_text = update.message.reply_to_message.text 
+   
         q = (user_text)
         name = ("result")
         qrcode = pyqrcode.create(q)
@@ -340,6 +345,8 @@ def callback (bot ,update):
         update.message.reply_photo( img,caption=f"Qr Data : {q}" ,reply_markup=InlineKeyboardMarkup ([[InlineKeyboardButton("Suggest us More",url="t.me/developerschat")]]) )
         
     elif callback_data == "ytaudio" :
+        user_text = update.message.reply_to_message.text 
+   
         text = update.message.reply_text("`Downloading  to my server😇`")
         yt = YouTube(user_text)
         print ("something")
@@ -362,6 +369,8 @@ def callback (bot ,update):
         
                  
     elif callback_data == "ytvideo":
+        user_text = update.message.reply_to_message.text 
+   
         text = update.message.reply_text("`Downloading  to my server `")
         yt = YouTube(user_text)
         print ("something") 
@@ -385,6 +394,8 @@ def callback (bot ,update):
          
         
     elif callback_data == "source" :
+        user_text = update.message.reply_to_message.text 
+   
         url = user_text 
         try:
             request =requests.get(url)
@@ -405,6 +416,8 @@ def callback (bot ,update):
     elif callback_data == "next02":
         update.message.edit_text (text=text2 , reply_markup= sound3)
     elif callback_data == "ama":
+        user_text = update.message.reply_to_message.text 
+   
         hi = user_text 
         json_data = { 'userId': 'public-access', 'ssml': f'{hi}','voice': 'am-ET-AmehaNeural',}
         response = requests.post('https://play.ht/api/transcribe', json =json_data)
@@ -417,6 +430,8 @@ def callback (bot ,update):
         
     else:
         call =  callback_data 
+        user_text = update.message.reply_to_message.text 
+   
         
         if "2" in call:
             pure = call.replace("2","")
@@ -425,14 +440,14 @@ def callback (bot ,update):
             w = open("sound.mp3","rb")
             update.message.reply_voice(w)
         elif "3" in call:
-            update.message.reply_text("`Translating●●○○○○○○ baby🤱`")
+            txt = update.message.reply_text("`Translating●●○○○○○○ baby🤱`")
             pure=call.replace("3","")
             user = user_text.replace(" ","+")
             data = f'async=translate,sl:auto,tl:{pure},st:{user},id:1672943546520,qc:true,ac:true,_id:tw-async-translate,_pms:qs,_fmt:pc'
             response = requests.post('https://www.google.com/async/translate',  headers =headers, data=data)
             v = BeautifulSoup(response.text , "html.parser")
             d = v.find("span",id="tw-answ-target-text")
-            update.message.reply_text(d)
+            txt.edit(d)
 
             
         else:
@@ -440,7 +455,7 @@ def callback (bot ,update):
             translater = Translator()
             data = callback_data
             Translation = translater.translate(user_text, dest= data)
-            update.message.edit_text(f"`{Translation.text}` \n \n ** Suggest us languages available on google but not listed here ** " , reply_markup  = ([[InlineKeyboardButton("Suggest", url="https://t.me/developerschat")]]))
+            update.message.edit_text(f"`{Translation.text}` \n \n ** Suggest us languages available on google but not listed here ** " , reply_markup  = InlineKeyboardMarkup([[InlineKeyboardButton("Suggest", url="https://t.me/developerschat")]]))
 v={}      
 @elpha.on_inline_query()   
 def inline (bot,msg):

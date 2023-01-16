@@ -8,10 +8,10 @@ from gtts import gTTS
 import qrcode 
 import os
 #import zbar
-#import pyzbar
-#from PIL import Image
+import pyzbar
+from PIL import Image
 #from pyzbar.pyzbar import decode
-#import pyqrcode
+import pyqrcode
 from tool import headers 
 #import cv2
 from pytube import YouTube 

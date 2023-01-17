@@ -8,16 +8,17 @@ from gtts import gTTS
 import qrcode 
 import os
 #import zbar
-import pyzbar
-from PIL import Image
+#import pyzbar
+#from PIL import Image
 #from pyzbar.pyzbar import decode
-import pyqrcode
+#import pyqrcode
 from tool import headers 
 #import cv2
 from pytube import YouTube 
 from bs4 import BeautifulSoup 
 import requests 
 whisper = {}
+whispe = {}
 
 
 
@@ -302,20 +303,20 @@ def callback (bot ,update):
         uid = update.from_user.id
         print (uid)
         beta = whisper.get("data").get("ex")
-        
+        w  = int(whispe.get("data").get("id").replace(".",""))
         u  = int(whisper.get("data").get("id").replace(".",""))
         if beta.startswith("."):
-            if u == uid :
+            if w == uid :
                 update.answer("Oh sorry dude😅you're the only one who can't able to see this message🙈 ",show_alert=True)
             else :
-                update.answer(str(whisper.get("data").get("text")) , show_alert=True)
+                update.answer(str(whispe.get("data").get("text")) , show_alert=True)
                 
         if uid == u :
             update.answer(text= str(whisper.get("data").get("text")) ,show_alert=True)
         else :
             update.answer("this message isn't sent for you ,don't click such buttons blindly as you get😏,now assume i haven't seen you & you haven't read this mesage and get back😒",show_alert=True)
-        time.sleep(480)    
-        whisper.clear() 
+       # time.sleep(480)    
+       #whisper.clear() 
     
     elif callback_data =="trans":
         user_text = update.message.reply_to_message.text 
@@ -363,8 +364,8 @@ def callback (bot ,update):
         with open(new_file,'rb') as e:
             def progress(current, total):
                 print(f"{current * 100 / total:.1f}%")
-                text.edit(f"`Uploading to your server😇 {current*100/total:.1f}% `")
-                update.message.reply_audio(e,caption=f"{yt.title} \n||why don't you click the button||",reply_markup=([[InlineKeyboardButton("Just Click",url="t.me/developerschat")]]),progress=progress)
+            text.edit(f"`Uploading to your server😇 {current*100/total:.1f}% `")
+            update.message.reply_audio(e,caption=f"{yt.title} \n||why don't you click the button||",reply_markup=([[InlineKeyboardButton("Just Click",url="t.me/developerschat")]]))
   
         
                  
@@ -389,7 +390,7 @@ def callback (bot ,update):
             def progress(current, total):
                 print(f"{current * 100 / total:.1f}%")
                 text.edit(f"` Uploading to your server😇 {current*100/total:.1f}% `")
-                update.message.reply_video(e,caption=f"{yt.title} \n||why don't you click the button||",reply_markup=([[InlineKeyboardButton("Just Click",url="t.me/developerschat")]]), progress=progress)
+                update.message.reply_video(e,caption=f"{yt.title} \n||why don't you click the button||",reply_markup=([[InlineKeyboardButton("Just Click",url="t.me/developerschat")]]))
   
          
         
@@ -465,6 +466,9 @@ def inline (bot,msg):
     id = txt.split("|")[0]
     text = txt.split("|")[1]
     whisper["data"]={"text":text , "id":id,"ex":txt}
+    if "." in txt:
+        whispe["data"]={"text":text , "id":id,"ex":txt}
+    
     
     msg.answer( results = [ ( InlineQueryResultArticle(
     title = "whispering", 

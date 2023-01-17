@@ -350,22 +350,22 @@ def callback (bot ,update):
    
         text = update.message.reply_text("`Downloading  to my server😇`")
         yt = YouTube(user_text)
-        print ("something")
+        #print ("something")
         video = yt.streams.filter(only_audio=True).first()
         folder = "downloads/video/"
-        print("something")
+        #print("something")
         if not os.path.isdir(folder):
             os.makedirs(folder)
         file = video.download(folder)
         #base, ext = os.path.splitext(file)
         new_file = yt.title + '.mp4'
         os.rename(file, new_file)
-        print('Downloading...')
+        #print('Downloading...')
         with open(new_file,'rb') as e:
             def progress(current, total):
                 print(f"{current * 100 / total:.1f}%")
             text.edit(f"`Uploading to your server😇 {current*100/total:.1f}% `")
-            update.message.reply_audio(e,caption=f"{yt.title} \n||why don't you click the button||",reply_markup=([[InlineKeyboardButton("Just Click",url="t.me/developerschat")]]))
+            update.message.reply_audio(e,caption=f"{yt.title} \n||why don't you click the button||",reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Just Click",url="t.me/developerschat")]]))
   
         
                  
@@ -374,10 +374,10 @@ def callback (bot ,update):
    
         text = update.message.reply_text("`Downloading  to my server `")
         yt = YouTube(user_text)
-        print ("something") 
+        #print ("something") 
         video = yt.streams.filter(file_extension="mp4").first()
         folder = "downloads/video/"
-        print("something")
+        #print("something")
         if not os.path.isdir(folder):
             os.makedirs(folder)
         file = video.download(folder)
@@ -385,12 +385,12 @@ def callback (bot ,update):
         #base, ext = os.path.splitext(file)
         new_file = yt.title + '.mp4'
         os.rename(file, new_file)
-        print('Downloading...')
+        #print('Downloading...')
         with open(new_file,'rb') as e:
             def progress(current, total):
                 print(f"{current * 100 / total:.1f}%")
                 text.edit(f"` Uploading to your server😇 {current*100/total:.1f}% `")
-                update.message.reply_video(e,caption=f"{yt.title} \n||why don't you click the button||",reply_markup=([[InlineKeyboardButton("Just Click",url="t.me/developerschat")]]))
+            update.message.reply_video(e,caption=f"{yt.title} \n||why don't you click the button||",reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("Just Click",url="t.me/developerschat")]]))
   
          
         

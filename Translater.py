@@ -29,7 +29,7 @@ elpha = Client ( "Tools",  api_id =18802415,  api_hash = "a8993f96404fd9a67de867
 def start (bot, msg):
     format = msg.from_user.first_name 
     text = f"**Hello sir {format} I'm multi purpose bot \n i can do some cool  tasks  .......etc** \n ||what if you joined my little channel🤕||"
-    mark = InlineKeyboardMarkup ([[InlineKeyboardButton("Channel",url="https://t.me/developerspage"),InlineKeyboardButton("Group",url="https://t.me/developerschat")], [InlineKeyboardButton("Developer", url="https://t.me/the_ep")]])
+    mark = InlineKeyboardMarkup ([[InlineKeyboardButton("Channel",url="https://t.me/developerspage"),InlineKeyboardButton("Group",url="https://t.me/developerschat")], [InlineKeyboardButton("Developer", url="https://t.me/e_phador"),InlineKeyboardButton("♧Moderator", url="https://t.me/the_ep")]])
     msg.reply(text=text , reply_markup = mark )
 @elpha.on_message(filters.private & filters.regex("http"))
 def http (bot,msg):
@@ -303,20 +303,24 @@ def callback (bot ,update):
         uid = update.from_user.id
         print (uid)
         beta = whisper.get("data").get("ex")
-        w  = int(whispe.get("data").get("id").replace(".",""))
-        u  = int(whisper.get("data").get("id").replace(".",""))
-        if beta.startswith("."):
-            if w == uid :
-                update.answer("Oh sorry dude😅you're the only one who can't able to see this message🙈 ",show_alert=True)
-            else :
-                update.answer(str(whispe.get("data").get("text")) , show_alert=True)
-                
+        u  = int(whisper.get("data").get("id"))
         if uid == u :
             update.answer(text= str(whisper.get("data").get("text")) ,show_alert=True)
         else :
             update.answer("this message isn't sent for you ,don't click such buttons blindly as you get😏,now assume i haven't seen you & you haven't read this mesage and get back😒",show_alert=True)
        # time.sleep(480)    
        #whisper.clear() 
+    elif callback_data == "whisperon":
+        uid = update.from_user.id
+        print (uid)
+        beta = whispe.get("data").get("ex")
+        w  = int(whispe.get("data").get("id"))
+        if w == uid :
+            update.answer("Oh sorry dude😅you're the only one who can't able to see this message🙈 ",show_alert=True)
+        else :
+            update.answer(str(whispe.get("data").get("text")) , show_alert=True)
+                
+  
     
     elif callback_data =="trans":
         user_text = update.message.reply_to_message.text 
@@ -460,20 +464,30 @@ def callback (bot ,update):
 v={}      
 @elpha.on_inline_query()   
 def inline (bot,msg):
-    
     txt = msg.query
     m = msg.from_user.first_name 
     id = txt.split("|")[0]
+    men = f"[User](tg://user?id={id})"
     text = txt.split("|")[1]
-    whisper["data"]={"text":text , "id":id,"ex":txt}
-    if "." in txt:
+    if "|!" in txt :
+        txt.replace("!","")
         whispe["data"]={"text":text , "id":id,"ex":txt}
+    else :
+        whisper["data"]={"text":text , "id":id,"ex":txt}
     
     
     msg.answer( results = [ ( InlineQueryResultArticle(
-    title = "whispering", 
-    description ="user id | message content format ",
-    input_message_content = InputTextMessageContent(f"whisper message from {m} to {id}") , reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Whisper", callback_data="whisper")]]))) ] )
+    title = "whisper to ",
+    description ="user id | message content ",
+    input_message_content = InputTextMessageContent(f"whisper message from {m} to {men}") , 
+    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Whisper", callback_data="whisper")]])
+    )),
+    InlineQueryResultArticle(
+    title = "whisper on ",
+    description ="user id |! message content ",
+    input_message_content = InputTextMessageContent(f"whisper message from {m} to {men}") ,
+    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Whisper", callback_data="whisperon")]])
+    )])
 @elpha.on_callback_query()
 def callback (bot ,update):
         callback_data = update.data

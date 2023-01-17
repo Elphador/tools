@@ -364,7 +364,7 @@ def callback (bot ,update):
             def progress(current, total):
                 print(f"{current * 100 / total:.1f}%")
                 text.edit(f"`Uploading to your server😇 {current*100/total:.1f}% `")
-                update.message.reply_audio(e,caption=f"{yt.title} \n||why don't you click the button||",reply_markup=([[InlineKeyboardButton("Just Click",url="t.me/developerschat")]]))
+                update.message.reply_audio(e,caption=f"{yt.title} \n||why don't you click the button||",reply_markup=([[InlineKeyboardButton("Just Click",url="t.me/developerschat")]]),progress=progress)
   
         
                  
@@ -389,7 +389,7 @@ def callback (bot ,update):
             def progress(current, total):
                 print(f"{current * 100 / total:.1f}%")
                 text.edit(f"` Uploading to your server😇 {current*100/total:.1f}% `")
-                update.message.reply_video(e,caption=f"{yt.title} \n||why don't you click the button||",reply_markup=([[InlineKeyboardButton("Just Click",url="t.me/developerschat")]]))
+                update.message.reply_video(e,caption=f"{yt.title} \n||why don't you click the button||",reply_markup=([[InlineKeyboardButton("Just Click",url="t.me/developerschat")]]), progress=progress)
   
          
         

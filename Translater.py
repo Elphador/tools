@@ -358,7 +358,7 @@ def callback (bot ,update):
             os.makedirs(folder)
         file = video.download(folder)
         #base, ext = os.path.splitext(file)
-        new_file = yt.title + '.mp4'
+        new_file = yt.title + '.mp3'
         os.rename(file, new_file)
         #print('Downloading...')
         with open(new_file,'rb') as e:

@@ -52,10 +52,10 @@ def dllink(bot ,msg):
 
     def progress(current, total):
 
-        print(f"**Downloading to My server😇 {current*100/total:.1f}% **")
+        text.edit(f"**Downloading to My server😇 {current*100/total:.1f}% **")
     try : 
       file = msg.download(progress=progress, block =True)
-      #time.sleep(3)
+      time.sleep(3)
       files = {
         'sess_id': (None, 'y3stdcwgd2eksu0c'),
         'utype': (None, 'prem'),

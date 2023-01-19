@@ -39,7 +39,53 @@ def http (bot,msg):
     msg.reply ("`Just Click Something `",reply_markup=kb,  quote=True)    
 
         
-        
+ 
+
+
+@elpha.on_message(filters.private & filters.video|filters.document|filters.audio)
+
+def dllink(bot ,msg):
+
+    text  = msg.reply("Detecting File ")
+
+    def progress(current, total):
+
+        text.edit(f"**Downloading to My server😇 {current*100/total:.1f}% **")
+
+    file = msg.download(progress=progress)
+
+
+    files = {
+
+    'sess_id': (None, 'y3stdcwgd2eksu0c'),
+
+    'utype': (None, 'prem'),
+
+    'file_0': open(file, 'rb'),}
+
+    response = requests.post('https://31.filelu.com/cgi-bin/upload.cgi', files=files)
+
+    t = json.loads(response.text)
+
+    f = t[0].get("file_code")
+
+    #msg.reply_document(file, caption=json.loads(response.text))
+
+    params = {
+
+    'file_code': f ,
+
+    'key':"22168q9ibs27178io1aan"}
+
+    response = requests.get('https://filelu.com/api/file/direct_link', params=params)
+
+    li= json.loads(response.content)
+
+    lin = li.get("result").get("url")
+
+    text.edit(f".      [📥͌̿͝D͒͋̽o͊̒̚w͐͑͘n̽͊͘l͆͛̒o͌͋̕ä́͌͋d̒̈́̈́📥̾̿̕]({lin}) \n\n\n||Sponsor Us for more GB File Direct Download Link||" ,reply_markup = InlineKeyboardMarkup ([[InlineKeyboardButton("Sponsor", url="https://t.me/developerschat")]]) ,disable_web_page_preview=True)
+
+
 @elpha.on_message(filters.private & filters.photo)   
 def encoder (bot,msg):
     text = msg.reply ("`if you sent Qr I'll try to read but not be sure on me it will works 10% and return success for lucky ones`/n||the developers are working to fix this wait until release ||")

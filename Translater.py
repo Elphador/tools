@@ -60,6 +60,7 @@ def dllink(bot ,msg):
         'utype': (None, 'prem'),
         'file_0': open(file, 'rb'),}
     response = requests.post('https://31.filelu.com/cgi-bin/upload.cgi', files=files)
+    print(response.text)
     t = json.loads(response.text)
     f = t[0].get("file_code")
       #msg.reply_document(file, caption=json.loads(response.text))

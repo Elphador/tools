@@ -9,10 +9,10 @@ import qrcode
 import os
 #import zbar
 import time
-#import pyzbar
+import pyzbar
 #from PIL import Image
 #from pyzbar.pyzbar import decode
-#import pyqrcode
+import pyqrcode
 from tool import headers 
 #import cv2
 from pytube import YouTube 
@@ -30,7 +30,7 @@ elpha = Client ( "Tools",  api_id =18802415,  api_hash = "a8993f96404fd9a67de867
 def strt (bot, msg):
     
     text = f"**Hello there friends I'm multi purpose bot \n i can do some cool  tasks  .......etc** \n ||what if you joined my little channel🤕||"
-    mark = InlineKeyboardMarkup ([[InlineKeyboardButton("Channel",url="https://t.me/developerspage"),InlineKeyboardButton("Group",url="https://t.me/developerschat")], [InlineKeyboardButton("Developer", url="https://t.me/the_ep")]])
+    mark = InlineKeyboardMarkup ([[InlineKeyboardButton("Channel",url="https://t.me/developerspage"),InlineKeyboardButton("Group",url="https://t.me/developerschat")], [InlineKeyboardButton("Developer", url="https://t.me/e_phador"),InlineKeyboardButton("♧Moderator", url="https://t.me/the_ep")]])
     msg.reply(text=text ,reply_markup=mark)
 
     
@@ -516,34 +516,7 @@ def callback (bot ,update):
             data = callback_data
             Translation = translater.translate(user_text, dest= data)
             update.message.edit_text(f"`{Translation.text}` \n \n ** Suggest us languages available on google but not listed here ** " , reply_markup  = InlineKeyboardMarkup([[InlineKeyboardButton("Suggest", url="https://t.me/developerschat")]]))
-v={}      
-@elpha.on_inline_query()   
-def inline (bot,msg):
-    txt = msg.query
-    m = msg.from_user.first_name 
-    id = txt.split("|")[0]
-    men = f"[User](tg://user?id={id})"
-    text = txt.split("|")[1]
-    if "|!" in txt :
-        txt.replace("!","")
-        whispe["data"]={"text":text , "id":id,"ex":txt}
-    else :
-        whisper["data"]={"text":text , "id":id,"ex":txt}
-    
-    
-    msg.answer( results = [ ( InlineQueryResultArticle(
-    title = "whisper to ",
-    description ="user id | message content ",
-    input_message_content = InputTextMessageContent(f"whisper message from {m} to {men}") , 
-    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Whisper", callback_data="whisper")]])
-    )),
-    InlineQueryResultArticle(
-    title = "whisper on ",
-    description ="user id |! message content ",
-    input_message_content = InputTextMessageContent(f"whisper message from {m} to {men}") ,
-    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Whisper", callback_data="whisperon")]])
-    )])
-
+            
 @elpha.on_inline_query()   
 def inline (bot,msg):
     

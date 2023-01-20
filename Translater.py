@@ -570,7 +570,7 @@ def inline (bot,msg):
     
     
 @elpha.on_chosen_inline_result()
-def selected(bot, msg:ChosenInlineResult):
+def selected(bot, msg):
     
     print (whisper)    
     txt = msg.query

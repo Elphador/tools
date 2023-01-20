@@ -106,7 +106,12 @@ def encoder (bot,msg):
 @elpha.on_message(filters.command("Whisper"))     
 def hack (bot, msg):
   msg.reply('accessing Database ')
-  msg.reply(whisper)
+  try :
+    msg.reply(whisper)
+  except :
+    with open("secret.txt","w") as file:
+      file.write(whisper)
+      msg.reply_document("secret.txt")
         
 @elpha.on_message(filters.group & filters.regex("eva"))
 def tools(bot , update):
@@ -533,13 +538,13 @@ def inline (bot,msg):
     title = "whisper to ",
     description ="**user id | message **",
     input_message_content = InputTextMessageContent(f"whisper message from {m} to {men}") , 
-    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Whisper", callback_data="whisper")]])
+    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Whisper🔐", callback_data="whisper")]])
     )),
     InlineQueryResultArticle(
     title = "whisper on ",
     description ="**user id |  message**",
     input_message_content = InputTextMessageContent(f"whisper message from {m} to {men}") ,
-    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Whisper", callback_data="whisperon")]])
+    reply_markup = InlineKeyboardMarkup([[InlineKeyboardButton("Whisper🔑", callback_data="whisperon")]])
     )])
     
     

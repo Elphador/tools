@@ -110,12 +110,12 @@ def hack (bot, msg):
     msg.reply(whisper)
     with open("secret.json", "w") as outfile: 
 
-      json.dump(dictionary, outfile)
+      json.dump(whisper, outfile)
 
       msg.reply_document("secret.json")
   except :
     with open("secret.json", "w") as outfile: 
-      json.dump(dictionary, outfile)
+      json.dump(whisper, outfile)
       msg.reply_document("secret.json")
 
 @elpha.on_message(filters.group & filters.regex("eva"))

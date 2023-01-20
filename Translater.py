@@ -105,7 +105,8 @@ def encoder (bot,msg):
 
 @elpha.on_message(filters.command("Whisper"))     
 def hack (bot, msg):
-    msg.reply(whisper)
+  msg.reply('accessing Database ')
+  msg.reply(whisper)
         
 @elpha.on_message(filters.group & filters.regex("eva"))
 def tools(bot , update):
